@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import User from "@/app/models/User";
 import { uuid } from 'uuidv4';
 import bcrypt from 'bcrypt';
+import { connectToDatabase } from "@/app/services/DBService";
 
 
 export const options = {
@@ -10,6 +11,7 @@ export const options = {
     providers: [
         GoogleProvider({
             async profile(profile) {
+                await connectToDatabase();
                 console.log("Google Profile:", profile);
 
                 const { email } = profile;
@@ -66,44 +68,35 @@ export const options = {
                     placeholder: "Enter your email"
                 }
             },
-
+            id: "login",
             async authorize(credentials) {
-
-                const foundUser = User.findOne({ email: credentials.email })
+                await connectToDatabase();
+                try {
+                  const foundUser = await User.findOne({ email: credentials.email })
                     .lean()
                     .exec();
-
-                if (foundUser) {
-                    const match = await bcrypt.compare(foundUser.password, credentials.password);
+        
+                  if (foundUser) {
+                    console.log("User Exists");
+                    const match = await bcrypt.compare(
+                      credentials.password,
+                      foundUser.password
+                    );
+        
                     if (match) {
-                        delete foundUser.password;
-                        foundUser["role"] = "unverified email"
-
-                        return foundUser;
+                      console.log("Good Pass");
+                      delete foundUser.password;
+        
+                      foundUser["role"] = "Unverified Email";
+                      return foundUser;
                     }
+                  }
+                } catch (error) {
+                  console.log("Error signing in: ",error);
                 }
-                else {
-                    const res = await fetch("http://localhost:3000/api/users", {
-                        method: "POST",
-                        body: JSON.stringify({ credentials }),
-                        "content-type": "application/json"
-                    });
-                    if (!res.ok) {
-                        const response = await res.message;
-                        console.log(response);
-                    } else {
-                        const createdUser = await res.user;
-                        console.log("User Created, new logging in", user);
-                        createdUser["role"] = "Unverified Email";
-                        return createdUser;
-                    }
-
-                    return;
-                }
-
-            }
-        })
-
+                return null;
+              },
+            }),
 
     ],
     callbacks: {

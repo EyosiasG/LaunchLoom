@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.hero-section {
+  background-image: url('https://img.freepik.com/free-photo/stacked-coins-with-dirt-plant_23-2148803905.jpg?w=1060&t=st=1704116720~exp=1704117320~hmac=b3929223ac804ccd13710c54496d0184cebede88039dc6f8ac106b75074fd3bd');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  height: 65vh;
+  background-position: center center;
+  background-attachment: fixed;
+}

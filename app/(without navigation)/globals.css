@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.login-section-1{
+    background-image: url('https://www.freepik.com/free-vector/box-with-money-charity-donation_5681052.htm#query=funding&position=0&from_view=search&track=sph&uuid=b58a7cf7-6b88-4f77-af64-296f93892fc4');
+  }
