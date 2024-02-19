@@ -1,16 +1,19 @@
 import mongoose, { Schema } from "mongoose";
 
 const projectSchema = new Schema({
-    userID: String, 
+   // userID: String, 
     projectName: String, 
-    projectNotion: String,
+    projectSubtitle: String,
     projectDescription: String,
-    projectImage: String, 
+    //imagePublicID: String,
+    //imageSecureURL: String,
     fundAmount: Number, 
-    fundAmountReached: Number, 
-    projectType: String, 
+    fundAmountReached: {
+        type: Boolean,
+        default: false
+    },
+    projectCategory: String, 
     publicationDate: { type: Date, default: Date.now },
-    closingDate: Date,
     isFeatured: {type: Boolean, default: false}
 });
 

@@ -12,3 +12,13 @@
   background-position: center center;
   background-attachment: fixed;
 }
+
+
+.add-project-hero {
+  background-image: url('https://img.freepik.com/free-photo/caucasian-man-working-shoot_53876-30174.jpg?w=1380&t=st=1704202531~exp=1704203131~hmac=62559d3ea9e41e0606956a20c770bdbe15ce38a4a00523c7c1f7bed9294331c7');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  height: 40vh;
+  background-position: center center;
+}
